@@ -1,0 +1,16 @@
+{
+	"manifest_version": 1,
+	"id": "com.whirledsol.embed-metadata",
+	"app_min_version": "3.5",
+	"version": "1.0.0",
+	"name": "embed-metadata",
+	"description": "Inserts metadata into note",
+	"author": "whirledsol",
+	"homepage_url": "https://github.com/whirledsol/joplin-plugin-embed-metadata/",
+	"repository_url": "https://github.com/whirledsol/joplin-plugin-embed-metadata/",
+	"keywords": [],
+	"categories": [],
+	"screenshots": [],
+	"icons": {},
+	"promo_tile": {}
+}
