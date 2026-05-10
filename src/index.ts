@@ -23,15 +23,16 @@ const createMetadataMarkdownTable = (note: any, dateFormat: string, timeFormat: 
 	const createDateTime = user_created_time ?? created_time;
 
 
-	return `<!-- metadata table ${moment().format(dateFormat)} ${moment().format(timeFormat)} -->
-	|Id|${id}|
-	|---|---|
-	|Modified|${moment(updateDateTime).format(dateFormat)} ${moment(updateDateTime).format(timeFormat)}|
-	|Created|${moment(createDateTime).format(dateFormat)} ${moment(createDateTime).format(timeFormat)}|`+
+	return `<!-- metadata table ${moment().format(dateFormat)} ${moment().format(timeFormat)} -->`+
+	`\n|Id|${id}|`+
+	`\n|---|---|`+
+	`\n|Modified|${moment(updateDateTime).format(dateFormat)} ${moment(updateDateTime).format(timeFormat)}|`+
+	`\n|Created|${moment(createDateTime).format(dateFormat)} ${moment(createDateTime).format(timeFormat)}|`+
 	(latitude != 0 ? 	`\n|Latitude|${latitude}&deg;|` 		: ``) +
 	(longitude != 0 ? 	`\n|Longitude|${longitude}&deg;|` 		: ``) +
 	(altitude != 0 ? 	`\n|Altitude|${altitude}|` 				: ``) +
-	`<!-- ./metadata table -->\n\n`;
+	`\n<!-- ./metadata table -->`+
+	`\n\n`;
 
 }
 
