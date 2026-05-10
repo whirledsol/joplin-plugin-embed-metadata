@@ -22,17 +22,17 @@ const createMetadataMarkdownTable = (note: any, dateFormat: string, timeFormat: 
 	const updateDateTime = user_updated_time ?? updated_time;
 	const createDateTime = user_created_time ?? created_time;
 
-	return
-`<!-- metadata -->
+
+return `<!-- metadata table ${moment().format(dateFormat)} ${moment().format(timeFormat)} -->
 |Id|${id}|
 |---|---|
 |Modified|${moment(updateDateTime).format(dateFormat)} ${moment(updateDateTime).format(timeFormat)}|
 |Created|${moment(createDateTime).format(dateFormat)} ${moment(createDateTime).format(timeFormat)}|
-|Latitude|${latitude}&deg;|
-|Longitude|${longitude}&deg;|
-|Altitude|${altitude}|
-<!-- metadata -->`;
-
+`+
+(latitude > 0 ? 	`\n|Latitude|${latitude}&deg;|` 		: ``) +
+(longitude > 0 ? 	`\n|Longitude|${longitude}&deg;|` 		: ``) +
+(altitude > 0 ? 	`\n|Altitude|${altitude}|` 				: ``) +
+`<!-- ./metadata table -->`;
 }
 
 
@@ -41,8 +41,8 @@ const createMetadataMarkdownTable = (note: any, dateFormat: string, timeFormat: 
 joplin.plugins.register({
 	onStart: async function() {
 
-		const dateFormat = await joplin.settings.globalValue('dateFormat');
-		const timeFormat = await joplin.settings.globalValue('timeFormat');
+		const dateFormat: string = await joplin.settings.globalValue('dateFormat');
+		const timeFormat: string = await joplin.settings.globalValue('timeFormat');
 
 		/**
 		* getMetadataMarkdown
