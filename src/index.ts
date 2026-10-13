@@ -2,6 +2,15 @@ import joplin from 'api';
 import { ToolbarButtonLocation } from 'api/types';
 import * as moment from 'moment';
 
+/**
+ * getWordCount
+ */
+const getWordCount = (s) =>{
+	s = s.replace(/(^\s*)|(\s*$)/gi,"");//exclude  start and end white-space
+	s = s.replace(/[ ]{2,}/gi," ");//2 or more space to 1
+	s = s.replace(/\n /,"\n"); // exclude newline with a start spacing
+	return s.split(' ').filter((str) => (str!="")).length;
+}
 
 /**
  * createMetadataMarkdownTable
@@ -17,17 +26,19 @@ const createMetadataMarkdownTable = (note: any, dateFormat: string, timeFormat: 
 		,latitude
 		,longitude
 		,altitude
+		,body
 	} = note;
 
 	const updateDateTime = user_updated_time ?? updated_time;
 	const createDateTime = user_created_time ?? created_time;
-
+	const wordCount = getWordCount(body)
 
 	return `<!-- metadata table ${moment().format(dateFormat)} ${moment().format(timeFormat)} -->`+
 	`\n|Id|${id}|`+
 	`\n|---|---|`+
 	`\n|Modified|${moment(updateDateTime).format(dateFormat)} ${moment(updateDateTime).format(timeFormat)}|`+
 	`\n|Created|${moment(createDateTime).format(dateFormat)} ${moment(createDateTime).format(timeFormat)}|`+
+	`\n|Word Count|${wordCount}|`+
 	(latitude != 0 ? 	`\n|Latitude|${latitude}&deg;|` 		: ``) +
 	(longitude != 0 ? 	`\n|Longitude|${longitude}&deg;|` 		: ``) +
 	(altitude != 0 ? 	`\n|Altitude|${altitude}|` 				: ``) +
@@ -51,6 +62,7 @@ joplin.plugins.register({
 		const getMetadataMarkdown = async () : Promise<string> => {
 			//get selected note
 			const note = await joplin.workspace.selectedNote();
+			console.log(note);
 			if (!note) {
 				console.info('No note is selected');
 				return null;
